@@ -208,6 +208,7 @@
   <ItemGroup>
     <Compile Include="ApiControllers\ApiMstArticleCategoryController.cs" />
     <Compile Include="ApiControllers\ApiMstArticleController.cs" />
+    <Compile Include="ApiControllers\ApiTrnSalesOrderController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -251,6 +252,8 @@
     </Compile>
     <Compile Include="Entities\MstArticle.cs" />
     <Compile Include="Entities\MstArticleCategory.cs" />
+    <Compile Include="Entities\TrnSalesOrder.cs" />
+    <Compile Include="Entities\TrnSalesOrderItem.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
