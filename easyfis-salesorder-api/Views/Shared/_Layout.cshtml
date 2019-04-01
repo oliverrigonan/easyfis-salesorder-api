@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" href="~/Images/Fab/easyfislogomini.ico">
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/wijmo/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -20,13 +21,12 @@
                 <a class="navbar-brand" rel="home" href="/Home/Index" title="Buy Sell Rent Everyting">
                     <img style="max-width:100px; margin-top: -7px;" src="~/Images/Logo/easyfislogonew.png">
                 </a>
-
-                @*@Html.ActionLink("EasyFIS Sales Order Mobile", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Orders", "SalesOrderList", "Home", new { area = "" }, null)</li>
                 </ul>
             </div>
         </div>
@@ -35,7 +35,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; EasyFIS Sales Order Mobile V.1.20190326.NORHGM</p>
+            <p>&copy; EasyFIS Sales Order Mobile V.1.20190401.NORHGM</p>
         </footer>
     </div>
 

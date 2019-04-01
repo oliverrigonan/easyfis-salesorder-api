@@ -14,5 +14,12 @@ namespace easyfis_salesorder_api.Controllers
 
             return View();
         }
+
+        public ActionResult SalesOrderList()
+        {
+            ViewBag.Title = "Sales Order List";
+
+            return View();
+        }
     }
 }

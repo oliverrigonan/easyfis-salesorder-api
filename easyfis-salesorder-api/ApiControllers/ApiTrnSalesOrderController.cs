@@ -217,5 +217,30 @@ namespace easyfis_salesorder_api.ApiControllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet, Route("api/salesOrder/list/{startDate}/{endDate}")]
+        public List<Entities.TrnSalesOrder> ListSalesOrder(String startDate, String endDate)
+        {
+            var salesOrders = from d in db.TrnSalesOrders
+                              where d.SODate >= Convert.ToDateTime(startDate)
+                              && d.SODate <= Convert.ToDateTime(endDate)
+                              select new Entities.TrnSalesOrder
+                              {
+                                  SONumber = d.SONumber,
+                                  SODate = d.SODate.ToShortDateString(),
+                                  DocumentReference = d.DocumentReference,
+                                  Remarks = d.Remarks,
+                                  ListSalesOrderItems = d.TrnSalesOrderItems.Any() ? d.TrnSalesOrderItems.Select(i => new Entities.TrnSalesOrderItem
+                                  {
+                                      ItemCode = i.MstArticle.ManualArticleCode,
+                                      ItemDescription = i.MstArticle.Article,
+                                      Price = i.Price,
+                                      Quantity = i.Quantity,
+                                      Amount = i.Amount
+                                  }).ToList() : new List<Entities.TrnSalesOrderItem>().ToList()
+                              };
+
+            return salesOrders.ToList();
+        }
     }
 }

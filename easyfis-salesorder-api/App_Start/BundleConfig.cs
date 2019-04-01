@@ -22,6 +22,15 @@ namespace easyfis_salesorder_api
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/wijmo/js").Include(
+                        "~/Scripts/jquery-3.3.1.js",
+                        "~/Scripts/wijmo.min.js",
+                        "~/Scripts/wijmo.input.min.js",
+                        "~/Scripts/wijmo.grid.min.js"));
+
+            bundles.Add(new StyleBundle("~/wijmo/css").Include(
+                        "~/Content/wijmo.min.css"));
         }
     }
 }
