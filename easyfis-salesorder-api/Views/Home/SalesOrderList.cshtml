@@ -71,6 +71,14 @@
     var salesOrderListCollectionView = new wijmo.collections.CollectionView(new wijmo.collections.ObservableArray);
     var salesOrderListFlexgrid = new wijmo.grid.FlexGrid("#salesOrderListFlexgrid");
 
+    var isSalesOrderListDataLoaded = false;
+
+    var btnSalesOrderListMoveToFirstPageGrid = document.getElementById('btnSalesOrderListMoveToFirstPageGrid');
+    var btnSalesOrderListMoveToPreviousPageGrid = document.getElementById('btnSalesOrderListMoveToPreviousPageGrid');
+    var btnSalesOrderListMoveToNextPageGrid = document.getElementById('btnSalesOrderListMoveToNextPageGrid');
+    var btnSalesOrderListMoveToLastPageGrid = document.getElementById('btnSalesOrderListMoveToLastPageGrid');
+    var btnSalesOrderListCurrentPageGrid = document.getElementById('btnSalesOrderListCurrentPageGrid');
+
     function createInputDateFilters() {
         cboSalesOrderListStartDate.dispose();
         cboSalesOrderListStartDate = new wijmo.input.InputDate('#cboSalesOrderListStartDate', {
@@ -176,6 +184,7 @@
         });
 
         salesOrderListFlexgrid.dispose();
+
         salesOrderListFlexgrid = new wijmo.grid.FlexGrid('#salesOrderListFlexgrid');
         salesOrderListFlexgrid.initialize({
             columns: [
@@ -186,7 +195,7 @@
                     "width": 100
                 },
                 {
-                    "header": "SI Date ",
+                    "header": "SO Date ",
                     "binding": "SODate",
                     "allowSorting": true,
                     "width": 90
@@ -241,27 +250,31 @@
 
         salesOrderListFlexgrid.trackChanges = true;
 
-        updateSalesOrderListNavigationButtons();
-
-        btnSalesOrderListMoveToFirstPageGrid.addEventListener('click', function () {
-            salesOrderListCollectionView.moveToFirstPage();
+        if (!isSalesOrderListDataLoaded) {
             updateSalesOrderListNavigationButtons();
-        });
 
-        btnSalesOrderListMoveToPreviousPageGrid.addEventListener('click', function () {
-            salesOrderListCollectionView.moveToPreviousPage();
-            updateSalesOrderListNavigationButtons();
-        });
+            btnSalesOrderListMoveToFirstPageGrid.addEventListener('click', function () {
+                salesOrderListCollectionView.moveToFirstPage();
+                updateSalesOrderListNavigationButtons();
+            });
 
-        btnSalesOrderListMoveToNextPageGrid.addEventListener('click', function () {
-            salesOrderListCollectionView.moveToNextPage();
-            updateSalesOrderListNavigationButtons();
-        });
+            btnSalesOrderListMoveToPreviousPageGrid.addEventListener('click', function () {
+                salesOrderListCollectionView.moveToPreviousPage();
+                updateSalesOrderListNavigationButtons();
+            });
 
-        btnSalesOrderListMoveToLastPageGrid.addEventListener('click', function () {
-            salesOrderListCollectionView.moveToLastPage();
-            updateSalesOrderListNavigationButtons();
-        });
+            btnSalesOrderListMoveToNextPageGrid.addEventListener('click', function () {
+                salesOrderListCollectionView.moveToNextPage();
+                updateSalesOrderListNavigationButtons();
+            });
+
+            btnSalesOrderListMoveToLastPageGrid.addEventListener('click', function () {
+                salesOrderListCollectionView.moveToLastPage();
+                updateSalesOrderListNavigationButtons();
+            });
+
+            isSalesOrderListDataLoaded = true;
+        }
     }
 
     function updateSalesOrderListNavigationButtons() {
@@ -278,8 +291,8 @@
         } else if (salesOrderListCollectionView.pageIndex === (salesOrderListCollectionView.pageCount - 1)) {
             btnSalesOrderListMoveToFirstPageGrid.removeAttribute('disabled');
             btnSalesOrderListMoveToPreviousPageGrid.removeAttribute('disabled');
-            btnSalesOrderListMoveToLastPageGrid.setAttribute('disabled', 'disabled');
             btnSalesOrderListMoveToNextPageGrid.setAttribute('disabled', 'disabled');
+            btnSalesOrderListMoveToLastPageGrid.setAttribute('disabled', 'disabled');
         } else {
             btnSalesOrderListMoveToFirstPageGrid.removeAttribute('disabled');
             btnSalesOrderListMoveToPreviousPageGrid.removeAttribute('disabled');
@@ -288,7 +301,6 @@
         }
         btnSalesOrderListCurrentPageGrid.innerHTML = (salesOrderListCollectionView.pageIndex + 1) + ' / ' + salesOrderListCollectionView.pageCount;
     }
-
 
     $(document).ready(function () {
         createInputDateFilters();
