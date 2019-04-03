@@ -242,5 +242,29 @@ namespace easyfis_salesorder_api.ApiControllers
 
             return salesOrders.ToList();
         }
+
+        [HttpGet, Route("api/salesOrder/detail/bySONumber/{SONumber}")]
+        public Entities.TrnSalesOrder DetailSalesOrderBySONumber(String SONumber)
+        {
+            var salesOrder = from d in db.TrnSalesOrders
+                             where d.SONumber.Equals(SONumber)
+                             select new Entities.TrnSalesOrder
+                             {
+                                 SONumber = d.SONumber,
+                                 SODate = d.SODate.ToShortDateString(),
+                                 DocumentReference = d.DocumentReference,
+                                 Remarks = d.Remarks,
+                                 ListSalesOrderItems = d.TrnSalesOrderItems.Any() ? d.TrnSalesOrderItems.Select(i => new Entities.TrnSalesOrderItem
+                                 {
+                                     ItemCode = i.MstArticle.ManualArticleCode,
+                                     ItemDescription = i.MstArticle.Article,
+                                     Price = i.Price,
+                                     Quantity = i.Quantity,
+                                     Amount = i.Amount
+                                 }).ToList() : new List<Entities.TrnSalesOrderItem>().ToList()
+                             };
+
+            return salesOrder.FirstOrDefault();
+        }
     }
 }
